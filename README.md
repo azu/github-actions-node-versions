@@ -1,6 +1,62 @@
 # github-actions-node-versions
 
-Update node_versions to LTS versions in GitHub Actions.
+Update `node_versions` in GitHub Actions to LTS and active Node.js versions
+
+## Examples
+
+`npx github-actions-node-versions` update following workflow
+
+```yaml
+name: "CI"
+on: [ push, pull_request ]
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest ]
+        node: [ 10, 12, 14 ]
+    name: Test(Node ${{ matrix.node }} on ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }} # install node.js
+      - name: Install
+        run: npm install
+      - name: Test
+        run: npm test
+```
+
+to 
+
+```yaml
+name: "CI"
+on: [ push, pull_request ]
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest ]
+        node: [ 12, 14, 16 ]
+    name: Test(Node ${{ matrix.node }} on ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }} # install node.js
+      - name: Install
+        run: npm install
+      - name: Test
+        run: npm test
+```
+
+- use `[Maintenance_LTS, Current_LTS, Active]` 3 versions
+    - [nodejs/Release: Node.js Release Working Group](https://github.com/nodejs/Release)
+- preserved comment
 
 ## Install
 
@@ -18,7 +74,6 @@ Install with [npm](https://www.npmjs.com/):
  
     Examples
       $ github-actions-node-versions
-
 
 ## Changelog
 
