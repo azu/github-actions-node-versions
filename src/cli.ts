@@ -40,7 +40,6 @@ export const run = async (
     );
     await Promise.all(
         transformContents.map((transformContent, index) => {
-            console.log(transformContent);
             if (transformContent !== workflowContents[index]) {
                 return fs.writeFile(workflows[index], transformContent, "utf-8");
             }
