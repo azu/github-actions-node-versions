@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest, windows-latest ]
-        node: [ 10, 12, 14 ]
+        node-version: [ 10, 12, 14 ]
     name: Test(Node ${{ matrix.node }} on ${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     steps:
@@ -40,14 +40,14 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest, windows-latest ]
-        node: [ 12, 14, 16 ]
-    name: Test(Node ${{ matrix.node }} on ${{ matrix.os }})
+        node-version: [ 12, 14, 16 ]
+    name: Test(Node ${{ matrix.node-version }} on ${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node }} # install node.js
+          node-version: ${{ matrix.node-version }} # install node.js
       - name: Install
         run: npm install
       - name: Test
