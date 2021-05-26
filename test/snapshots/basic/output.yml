@@ -1,0 +1,52 @@
+name: "CI"
+on: [ push, pull_request ]
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest ]
+        node: [ 12, 14, 16 ]
+    name: Test(Node ${{ matrix.node }} on ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Bootstrap
+        run: yarn run bootstrap
+      - name: Test
+        run: |
+          yarn test
+          yarn test:examples
+      - name: Integraion Tests
+        # Some E2E does not work on Windows
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macOS-latest'
+        run: yarn test:integration
+
+  documentation:
+    strategy:
+      matrix:
+        node: [ 14 ]
+
+    name: Documentation(Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Bootstrap
+        run: yarn run bootstrap
+      - run: yarn run test:docs
+      - run: yarn run website
