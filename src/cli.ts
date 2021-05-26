@@ -31,7 +31,6 @@ export const run = async (
     _input = cli.input,
     flags = cli.flags
 ): Promise<{ exitStatus: number; stdout: string | null; stderr: Error | null }> => {
-    console.log(flags);
     const workflows = await globby(flags.githubDir.split(path.sep).join("/") + "/workflows/*.{yml,yaml}");
     const workflowContents = await Promise.all(
         workflows.map((workflowFilePath) => fs.readFile(workflowFilePath, "utf-8"))
