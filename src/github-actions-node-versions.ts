@@ -36,7 +36,7 @@ export const updateNodeVersions = async (yamlString: YAMLString): Promise<YAMLSt
             const value = pair.value as { items: Pair[] };
             const nodePair = value.items.find((item) => {
                 const value = (item.key as any).value;
-                return value === "node" || value === "node_version";
+                return value === "node" || value === "node_version" || value === "node-version";
             });
             if (!nodePair) {
                 return;
