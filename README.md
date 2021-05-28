@@ -54,7 +54,7 @@ jobs:
         run: npm test
 ```
 
-- use `[Maintenance_LTS, Current_LTS, Active]` 3 versions by default
+- use `[Maintenance LTS, Active LTS, Current]` 3 versions by default
     - [nodejs/Release: Node.js Release Working Group](https://github.com/nodejs/Release)
 - preserved comment
 
