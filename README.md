@@ -1,6 +1,6 @@
 # github-actions-node-versions
 
-Update `node_versions` in GitHub Actions to LTS and active Node.js versions
+Update `node-version` in GitHub Actions to LTS and active Node.js versions
 
 ## Examples
 
@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node }} # install node.js
+          node-version: ${{ matrix.node-version }} # install node.js
       - name: Install
         run: npm install
       - name: Test
