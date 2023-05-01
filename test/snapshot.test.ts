@@ -1,8 +1,9 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as assert from "assert";
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 // transform function
-import { updateNodeVersions } from "../src/github-actions-node-versions";
+import { updateNodeVersions } from "../src/github-actions-node-versions.js";
 
 const fixturesDir = path.join(__dirname, "snapshots");
 describe("Snapshot testing", () => {

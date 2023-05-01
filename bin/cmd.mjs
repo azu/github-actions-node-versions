@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-require("../lib/cli")
-    .run()
+import { run } from "../module/cli.js";
+
+run()
     .then(
         ({ exitStatus, stderr, stdout }) => {
             if (stdout) {
