@@ -15,7 +15,7 @@ export const updateNodeVersions = async (yamlString: YAMLString): Promise<YAMLSt
     const doc = YAML.parseDocument(yamlString);
     const active = major(await alias("stable"));
     const currentLts = major(await alias("lts"));
-    const previousLts = major(await alias("lts/-2"));
+    const previousLts = major(await alias("lts/-1"));
     const versions = (() => {
         // active is lts
         if (active === currentLts) {
