@@ -26,7 +26,12 @@ export const updateNodeVersions = async (yamlString: YAMLString): Promise<YAMLSt
             return [currentLts, previousLts];
         }
         return [active, currentLts, previousLts];
-    })().sort();
+    })()
+        .sort()
+        .filter((v, i, a) => {
+            // remove duplicate
+            return a.indexOf(v) === i;
+        });
     let result = yamlString;
     YAML.visit(doc, {
         Pair(_, pair) {
