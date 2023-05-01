@@ -11,22 +11,28 @@ const major = (version: string): number => {
     return parse.major;
 };
 type YAMLString = string;
+const removeDuplicate = (array: number[]): number[] => {
+    // use Set
+    return [...new Set(array)];
+};
 export const updateNodeVersions = async (yamlString: YAMLString): Promise<YAMLString> => {
     const doc = YAML.parseDocument(yamlString);
     const active = major(await alias("stable"));
     const currentLts = major(await alias("lts"));
-    const previousLts = major(await alias("lts/-2"));
-    const versions = (() => {
-        // active is lts
-        if (active === currentLts) {
-            return [currentLts, previousLts];
-        }
-        if (active % 2 !== 0) {
-            // remove unstable active
-            return [currentLts, previousLts];
-        }
-        return [active, currentLts, previousLts];
-    })().sort();
+    const previousLts = major(await alias("lts/-1"));
+    const versions = removeDuplicate(
+        (() => {
+            // active is lts
+            if (active === currentLts) {
+                return [currentLts, previousLts];
+            }
+            if (active % 2 !== 0) {
+                // remove unstable active
+                return [currentLts, previousLts];
+            }
+            return [active, currentLts, previousLts];
+        })()
+    ).sort();
     let result = yamlString;
     YAML.visit(doc, {
         Pair(_, pair) {

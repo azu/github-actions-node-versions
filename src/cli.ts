@@ -1,7 +1,7 @@
 import meow from "meow";
 import * as fs from "fs/promises";
 import * as path from "path";
-import globby from "globby";
+import { globby } from "globby";
 import { updateNodeVersions } from "./github-actions-node-versions.js";
 
 export const cli = meow(
@@ -16,6 +16,7 @@ export const cli = meow(
       $ github-actions-node-versions
 `,
     {
+        importMeta: import.meta,
         flags: {
             githubDir: {
                 type: "string",

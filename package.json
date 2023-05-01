@@ -18,30 +18,41 @@
   "license": "MIT",
   "author": "azu",
   "sideEffects": false,
-  "main": "lib/github-actions-node-versions.js",
-  "module": "module/github-actions-node-versions.js",
-  "types": "lib/github-actions-node-versions.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./module/github-actions-node-versions.d.ts",
+        "default": "./module/github-actions-node-versions.js"
+      },
+      "default": "./module/github-actions-node-versions.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./module/github-actions-node-versions.js",
+  "module": "./module/github-actions-node-versions.js",
+  "types": "./module/github-actions-node-versions.d.ts",
+  "bin": {
+    "github-actions-node-versions": "./bin/cmd.mjs"
+  },
   "directories": {
     "lib": "lib",
     "test": "test"
   },
-  "bin": {
-    "github-actions-node-versions": "./bin/cmd.js"
-  },
   "files": [
     "bin/",
-    "lib/",
+    "module/",
     "src/"
   ],
   "scripts": {
-    "test": "mocha \"test/**/*.ts\"",
-    "updateSnapshot": "UPDATE_SNAPSHOT=1 npm test",
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css}\"",
     "prepare": "git config --local core.hooksPath .githooks",
-    "build": "tsc -p .",
-    "watch": "tsc -p . --watch",
-    "clean": "rimraf lib/ module/",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepublishOnly": "npm run clean && npm run build",
+    "test": "mocha",
+    "updateSnapshot": "UPDATE_SNAPSHOT=1 npm test",
+    "watch": "tsc --build --watch"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css}": [
@@ -54,23 +65,23 @@
     "tabWidth": 4,
     "trailingComma": "none"
   },
-  "devDependencies": {
-    "@types/mocha": "^8.2.2",
-    "@types/node": "^15.6.1",
-    "@types/semver": "^7.3.6",
-    "lint-staged": "^11.0.0",
-    "mocha": "^8.4.0",
-    "prettier": "^2.3.0",
-    "rimraf": "^3.0.2",
-    "ts-node": "^10.0.0",
-    "ts-node-test-register": "^10.0.0",
-    "typescript": "^4.2.4"
-  },
   "dependencies": {
-    "globby": "^11.0.3",
-    "meow": "^9.0.0",
-    "node-version-alias": "^1.0.1",
-    "semver": "^7.3.5",
-    "yaml": "^2.0.0-5"
-  }
+    "globby": "^13.1.4",
+    "meow": "^11.0.0",
+    "node-version-alias": "^3.4.1",
+    "semver": "^7.5.0",
+    "yaml": "^2.2.2"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.16.3",
+    "@types/semver": "^7.3.13",
+    "lint-staged": "^13.2.2",
+    "mocha": "^10.2.0",
+    "prettier": "^2.8.8",
+    "rimraf": "^5.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  },
+  "packageManager": "yarn@1.22.19"
 }
